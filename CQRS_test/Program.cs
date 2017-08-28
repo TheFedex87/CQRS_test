@@ -10,6 +10,7 @@ namespace CQRS_test
     {
         private int age = 20;
         private EventBroker eb;
+        private string new_filed_from_vs;
 
         public Person(EventBroker eventBroker)
         {
