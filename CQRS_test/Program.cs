@@ -10,6 +10,7 @@ namespace CQRS_test
     {
         private int age = 20;
         private EventBroker eb;
+        private string new_field_to_branch1;
 
         public Person(EventBroker eventBroker)
         {
@@ -57,7 +58,7 @@ namespace CQRS_test
         }
     }
 
-    public class Command
+    public class Command : EventArgs
     {
     }
 
