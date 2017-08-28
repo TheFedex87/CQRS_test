@@ -11,6 +11,7 @@ namespace CQRS_test
         private int age = 20;
         private EventBroker eb;
         private string new_filed_from_vs;
+        private int test_filed_from_browser;
 
         public Person(EventBroker eventBroker)
         {
