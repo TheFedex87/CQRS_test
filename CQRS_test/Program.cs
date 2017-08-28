@@ -33,6 +33,7 @@ namespace CQRS_test
             var cac = e as ChangeAgeCommand;
             if (cac != null && cac.Target == this)
             {
+                eb.AllEvents.Add(new AgeChangedEvent(this, age, cac.Age));
                 age = cac.Age;
             }
         }
@@ -40,7 +41,7 @@ namespace CQRS_test
 
     public class EventBroker
     {
-        public List<Event> allEvents = new List<Event>();
+        public List<Event> AllEvents = new List<Event>();
 
         public event EventHandler<Command> Commands;
 
@@ -71,6 +72,7 @@ namespace CQRS_test
             Target = target;
             this.Age = age;
         }
+
         
     }
 
@@ -93,6 +95,24 @@ namespace CQRS_test
     {
     }
 
+    class AgeChangedEvent : Event
+    {
+        public Person Target;
+        public int NewValue, OldValue;
+
+        public AgeChangedEvent(Person target, int oldValue, int newValue)
+        {
+            Target = target;
+            OldValue = oldValue;
+            NewValue = newValue;
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Age was {0} and now is {1}", OldValue, NewValue);
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
@@ -103,6 +123,8 @@ namespace CQRS_test
             Console.WriteLine(eb.Query<int>(new AgeQuery(p)));
             eb.Command(new ChangeAgeCommand(p, 30));
             Console.WriteLine(eb.Query<int>(new AgeQuery(p)));
+
+            eb.AllEvents.ForEach(x => Console.WriteLine(x.ToString()));
 
             Console.ReadLine();
         }
