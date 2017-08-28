@@ -8,7 +8,6 @@ namespace CQRS_test
 {
     public class Person
     {
-        private string added_field_into_vs_new;
         private int age = 20;
         private EventBroker eb;
 
